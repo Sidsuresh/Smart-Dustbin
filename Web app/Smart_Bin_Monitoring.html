@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bin Monitoring</title>
+    <link rel="stylesheet" href="sbmcss.css">
+    <script type="text/javascript" src="Fbase.js"></script>
+    <script src="plotly.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <header>
+            <h1 class="title">
+                Smart Bin
+            </h1>
+            <ul>
+                <a href="Events.html" target="_blank">About Us</a>&emsp;&emsp;&emsp;
+            </ul>
+        </header>
+    </div>
+
+    <div class="body_container">
+        <div class="gauge_container">
+            <div id="chart_div"></div>
+        </div>
+        <div class="bin_container">
+            <img id="bin_img" src="img/dbin.png" />
+        </div>
+        <br>
+        <div class="loc_container">
+            <iframe width="100%" height="400px" frameborder="2" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Central%20Park,%20New%20York+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+            </iframe>
+        </div>
+        <div class="chart_container">
+            <div id="line_chart"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['gauge'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Garbage', 0]
+            ]);
+
+            var options = {
+                min: 0, max: 35,
+                width: 700, height: 200,
+                redFrom: 25, redTo: 35,
+                yellowFrom: 15, yellowTo: 25,
+                minorTicks: 5,
+                easing: 'inAndOut',
+            };
+
+            var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+
+            setInterval(function () {
+                var lvl = getLvl();
+                var aLvl = 45 - lvl;
+                console.log(lvl);
+                loadPic(lvl)
+                data.setValue(0, 1, aLvl);
+                chart.draw(data, options);
+            }, 5000);
+        }
+
+        Plotly.newPlot('line_chart', [{
+            y: [45 - getLvl()],
+            type: 'line'
+        }]);
+
+        setInterval(function () {
+            Plotly.extendTraces('line_chart', { y: [[45 - getLvl()]] }, [0])
+        }, 5000);
+
+    </script>
+
+</body>
+
+</html>
