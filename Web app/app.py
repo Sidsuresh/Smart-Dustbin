@@ -6,14 +6,14 @@ from flask import Flask, request, jsonify, after_this_request
 app = Flask(__name__)
 
 firebase_config = {
-        "apiKey": "AIzaSyCEQSxJPFbItS2GS6ClL0jHpzTzH3Fegcg",
-        "authDomain": "smart-garbage-monitoring-iot.firebaseapp.com",
-        "databaseURL": "https://smart-garbage-monitoring-iot-default-rtdb.firebaseio.com",
-        "projectId": "smart-garbage-monitoring-iot",
-        "storageBucket": "smart-garbage-monitoring-iot.appspot.com",
-        "messagingSenderId": "489588431805",
-        "appId": "1:489588431805:web:9f6c0f93d7a5f6a8c210d4",
-        "measurementId": "G-0MYZ33N1C8"
+        "apiKey": "",
+        "authDomain": "",
+        "databaseURL": "",
+        "projectId": "",
+        "storageBucket": "",
+        "messagingSenderId": "",
+        "appId": "",
+        "measurementId": ""
 }
 
 firebase = pyrebase.initialize_app(firebase_config)
